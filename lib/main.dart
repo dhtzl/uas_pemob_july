@@ -9,7 +9,7 @@ void main() {
 }
 
 class BelajarGetData extends StatelessWidget {
-  final String apiUrl = "•	https://jsonplaceholder.typicode.com/posts";
+  final String apiUrl = "https://jsonplaceholder.typicode.com/posts";
 
   Future<List<dynamic>> _fecthDataUsers() async {
     var result = await http.get(apiUrl);
