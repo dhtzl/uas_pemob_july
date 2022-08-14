@@ -1,53 +1,102 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:http/http.dart';
+import 'package:uas_pemob/post.dart';
+import 'package:uas_pemob/get.dart';
+import 'package:uas_pemob/patch.dart';
+import 'package:uas_pemob/delete.dart';
+import 'package:uas_pemob/put.dart';
 
 void main() {
-  runApp(MaterialApp(
-    home: BelajarGetData(),
-  ));
+  runApp(
+    MyApp(),
+  );
 }
 
-class BelajarGetData extends StatelessWidget {
-  final String apiUrl = "https://jsonplaceholder.typicode.com/posts";
-
-  Future<List<dynamic>> _fecthDataUsers() async {
-    var result = await http.get(apiUrl);
-    return json.decode(result.body)['data'];
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'HTTP Methods UAS PEMOB 2022 Daniel Hutajulu',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyListView(),
+    );
   }
+}
+
+class MyListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Belajar GET HTTP'),
+        title: new Text('List View HTTP Methods UAS PEMOB'),
       ),
-      body: Container(
-        child: FutureBuilder<List<dynamic>>(
-          future: _fecthDataUsers(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                  padding: EdgeInsets.all(10),
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      leading: CircleAvatar(
-                        radius: 30,
-                        backgroundImage:
-                            NetworkImage(snapshot.data[index]['avatar']),
-                      ),
-                      title: Text(snapshot.data[index]['first_name'] +
-                          " " +
-                          snapshot.data[index]['last_name']),
-                      subtitle: Text(snapshot.data[index]['email']),
-                    );
-                  });
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
+      body: ListView(
+        children: [
+          ListTile(
+            title: Text('GET'),
+            trailing: Icon(Icons.keyboard_arrow_right_sharp),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => metode_get(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('POST'),
+            trailing: Icon(Icons.keyboard_arrow_right_sharp),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => metode_post(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('PATCH'),
+            trailing: Icon(Icons.keyboard_arrow_right_sharp),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => metode_patch(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('PUT'),
+            trailing: Icon(Icons.keyboard_arrow_right_sharp),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => metode_put(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('DELETE'),
+            trailing: Icon(Icons.keyboard_arrow_right_sharp),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => metode_delete(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
